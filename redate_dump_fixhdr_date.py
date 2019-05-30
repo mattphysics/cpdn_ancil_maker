@@ -53,7 +53,7 @@ def redate_dump_fixhdr(infile, outfile, year, month, day):
 #############################################################################
 
 if __name__ == "__main__":
-    opts, args = getopt.getopt(sys.argv[1:], 'i:o:y:m:d', ['input==', 'output==', 'year==','month==','day=='])
+    opts, args = getopt.getopt(sys.argv[1:], 'i:o:y:m:d', ['input=', 'output=', 'year=','month=','day='])
     calendar = "-1"
     periodic = False
     dump = False
