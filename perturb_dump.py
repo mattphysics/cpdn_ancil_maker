@@ -13,7 +13,16 @@ from read_um import *
 from write_ancil import write_ancil
 import array
 import numpy
+from netCDF4 import Dataset as netcdf_file
 
+def get_pert_data_nc(pert_file):
+    nc_file = netcdf_file(pert_file,'r')
+    pert_var=nc_file.variables['perturbation']
+    pert=pert_var[:]
+    data=pert.flatten()
+    print(numpy.max(data))
+    print(data.shape)
+    return data
 
 def get_pert_data(pert_file):
     # read the file as a binary file
@@ -110,7 +119,7 @@ def perturb_dump(infile, pert_data, field, outfile):
 #############################################################################
 
 if __name__ == "__main__":
-    opts, args = getopt.getopt(sys.argv[1:], 'i:o:y:', ['input==', 'pert_file=', 'field==', 'output=='])
+    opts, args = getopt.getopt(sys.argv[1:], 'i:p:f:o', ['input==', 'pert_file==', 'field==', 'output=='])
     calendar = "-1"
     periodic = False
     dump = False
@@ -118,13 +127,18 @@ if __name__ == "__main__":
     for opt, val in opts:
         if opt in ['--input=','--input', '-i']:
             infile = val
-	if opt in ['--pert_file=','--pert_file', '-p']:
+        if opt in ['--pert_file=','--pert_file', '-p']:
             pert_file = val
-	if opt in ['--field=','--field', '-f']:
+        if opt in ['--field=','--field', '-f']:
             field = int(val)
         if opt in ['--output=','--output', '-o']:
-            outfile = val
+            outfile = val    
 
-    pert_data=get_pert_data(pert_file)
+    sfx=pert_file.split(".")[-1]
+    print(sfx)
+    if sfx=="nc":
+	pert_data=get_pert_data_nc(pert_file)
+    else:
+    	pert_data=get_pert_data(pert_file)
 
     perturb_dump(infile, pert_data, field, outfile)
