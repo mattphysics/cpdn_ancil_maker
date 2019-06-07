@@ -1,3 +1,4 @@
+#!/home/boinc/miniconda2/envs/oifs_pyenv/bin/python
 #!/usr/bin/env python
 #############################################################################
 #
@@ -116,6 +117,7 @@ def perturb_dump(infile, pert_data, field, outfile):
     write_ancil(outfile, fix_hdr, intc, realc, pp_hdrs, data, levc, rowc)
     fh.close()
 
+    return True
 #############################################################################
 
 if __name__ == "__main__":
@@ -141,4 +143,4 @@ if __name__ == "__main__":
     else:
     	pert_data=get_pert_data(pert_file)
 
-    perturb_dump(infile, pert_data, field, outfile)
+    ok=perturb_dump(infile, pert_data, field, outfile)
