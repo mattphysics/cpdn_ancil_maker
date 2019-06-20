@@ -93,7 +93,14 @@ def perturb_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fie
 
 #############################################################################
 
-def perturb_dump(infile, pert_data, field, outfile):
+def perturb_dump(infile, pert_file, field, outfile):
+    sfx=pert_file.split(".")[-1]
+    print(sfx)
+    if sfx=="nc":
+        pert_data=get_pert_data_nc(pert_file)
+    else:
+        pert_data=get_pert_data(pert_file)
+
     # read the file as a binary file
     fh = open(infile, 'rb')
     fix_hdr = read_fixed_header(fh)
@@ -115,15 +122,11 @@ def perturb_dump(infile, pert_data, field, outfile):
     # write out the file
     write_ancil(outfile, fix_hdr, intc, realc, pp_hdrs, data, levc, rowc)
     fh.close()
+    return True
 
 #############################################################################
-
-if __name__ == "__main__":
+def main():
     opts, args = getopt.getopt(sys.argv[1:], 'i:p:f:o', ['input==', 'pert_file==', 'field==', 'output=='])
-    calendar = "-1"
-    periodic = False
-    dump = False
-    strip_cm = False
     for opt, val in opts:
         if opt in ['--input=','--input', '-i']:
             infile = val
@@ -132,13 +135,9 @@ if __name__ == "__main__":
         if opt in ['--field=','--field', '-f']:
             field = int(val)
         if opt in ['--output=','--output', '-o']:
-            outfile = val    
+            outfile = val
 
-    sfx=pert_file.split(".")[-1]
-    print(sfx)
-    if sfx=="nc":
-	pert_data=get_pert_data_nc(pert_file)
-    else:
-    	pert_data=get_pert_data(pert_file)
+    ok=perturb_dump(infile, pert_file, field, outfile)
 
-    perturb_dump(infile, pert_data, field, outfile)
+if __name__ == "__main__":
+    main()
