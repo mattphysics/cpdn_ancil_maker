@@ -37,9 +37,9 @@ def redate_dump_fixhdr(infile, outfile, year, month, day):
     fix_hdr[29] = day
 
     for i in range(0, fix_hdr[151]):
-	pp_hdrs[i,0] = year
+        pp_hdrs[i,0] = year
         pp_hdrs[i,6] = year   
-	pp_hdrs[i,1] = month
+        pp_hdrs[i,1] = month
         pp_hdrs[i,7] = month   
         pp_hdrs[i,2] = day
         pp_hdrs[i,8] = day    
@@ -64,27 +64,27 @@ if __name__ == "__main__":
         if opt in ['--output=','--output', '-o']:
             outfile = val
         if opt in ['--year=','--year', '-y']:
-	    yr_val = val
-	if opt in ['--month=','--month', '-m']:
+            yr_val = val
+        if opt in ['--month=','--month', '-m']:
             mon_val = val
-	if opt in ['--day=','--day', '-d']:
+        if opt in ['--day=','--day', '-d']:
             dy_val = val
     try:
         year = int(yr_val)
     except:
-        print "Year in format yyyy"
+        print("Year in format yyyy")
         sys.exit(0)
 
     try:
         month = int(mon_val)
     except:
-        print "Month in format mm"
+        print("Month in format mm")
         sys.exit(0)
 
     try:
         day = int(dy_val)
     except:
-        print "Day in format dd"
+        print("Day in format dd")
         sys.exit(0)
 
     redate_dump_fixhdr(infile, outfile, year, month, day)

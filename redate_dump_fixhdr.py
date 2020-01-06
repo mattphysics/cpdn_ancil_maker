@@ -55,11 +55,11 @@ if __name__ == "__main__":
         if opt in ['--output=','--output', '-o']:
             outfile = val
         if opt in ['--year=','--year', '-y']:
-	    date = val
+            date = val
     try:
         year = int(date)
     except:
-        print "Year in format yyyy"
+        print("Year in format yyyy")
         sys.exit(0)
 
     redate_dump_fixhdr(infile, outfile, year)

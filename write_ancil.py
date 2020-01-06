@@ -20,7 +20,7 @@ def writeu(fh, data, wordsize, pout=False):
     c = 0
     for i in data:
         if pout:
-            print c + 1, i
+            print(c + 1, i)
             c+=1
         if isinstance(i, numpy.int32) or isinstance(i, int):
             fmt = '<' + 'i'

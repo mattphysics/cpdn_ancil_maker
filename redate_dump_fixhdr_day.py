@@ -58,11 +58,11 @@ if __name__ == "__main__":
         if opt in ['--output=','--output', '-o']:
             outfile = val
         if opt in ['--day=','--day', '-d']:
-	    date = val
+            date = val
     try:
         day = int(date)
     except:
-        print "Day in format dd"
+        print("Day in format dd")
         sys.exit(0)
 
     redate_dump_fixhdr(infile, outfile, day)

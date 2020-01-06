@@ -165,7 +165,7 @@ if __name__ == "__main__":
         new_nlon = int(new_lon)
         new_nlat = int(new_lat)
     except:
-        print "Check arguments"
+        print("Check arguments")
         sys.exit(0)
             
     regrid_ancil(infile, outfile, new_nlon, new_nlat)

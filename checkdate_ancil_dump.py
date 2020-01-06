@@ -27,8 +27,8 @@ def checkdate(infile):
     year = fix_hdr[27]
     mon = fix_hdr[28]
     day = fix_hdr[29]
-#   print 'date of ancil/dump file'
-#   print year,mon,day
+#   print('date of ancil/dump file')
+#   print(year,mon,day)
     fh.close()  
     if day==1:
         return True
@@ -57,5 +57,5 @@ if __name__ == "__main__":
         if checkdate(fatmos) and checkdate(fregion):
             fgood.write(line)
         else:
-            print 'bad file:',atmos.strip(' ,'),region.strip(' ,')
+            print('bad file:',atmos.strip(' ,'),region.strip(' ,'))
     fgood.close()

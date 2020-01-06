@@ -53,6 +53,7 @@ def perturb_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fie
         start_idx = 0
     if n_fields == -1:
         n_fields = pp_hdrs.shape[0]
+    field=int(field)
     # read the data as a numpy array
     # get the data size from the integer constants
     pp_hdr_size = fix_hdr[150]
@@ -66,7 +67,7 @@ def perturb_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fie
     for i in range(start_idx, start_idx + n_fields):
         # get where the field starts as an offset in the file
         c_hdr = pp_hdrs[i]
-	stash_code=c_hdr[41]
+        stash_code=c_hdr[41]
         surface_offset = c_hdr[28]
         surface_size = c_hdr[29]
         data_size = c_hdr[14]
@@ -75,20 +76,20 @@ def perturb_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fie
         data_raw = fh.read(surface_size * WORDSIZE)
         data = array.array('f')
         data.fromstring(data_raw)
-	if field==stash_code:
-		#print(field,stash_code)
-		start_fidx=fidx*c_hdr[14]
-		end_fidx=start_fidx+c_hdr[14]
-		if end_fidx<=len(pert_data):
-			old_data=data[0:c_hdr[14]]
-			new_data=[sum(x) for x in zip(old_data, pert_data[start_fidx:end_fidx])]
-			#print(old_data[0:5],pert_data[start_fidx:(start_fidx+5)],new_data[0:5])
-			fidx=fidx+1
-		else:
-			new_data=data[0:c_hdr[14]]	
-	else:
-		new_data=data[0:c_hdr[14]]
-	all_data.extend(new_data)
+        if field==stash_code:
+            #print(field,stash_code)
+            start_fidx=fidx*c_hdr[14]
+            end_fidx=start_fidx+c_hdr[14]
+            if end_fidx<=len(pert_data):
+                old_data=data[0:c_hdr[14]]
+                new_data=[sum(x) for x in zip(old_data, pert_data[start_fidx:end_fidx])]
+                #print(old_data[0:5],pert_data[start_fidx:(start_fidx+5)],new_data[0:5])
+                fidx=fidx+1
+            else:
+                new_data=data[0:c_hdr[14]]  
+        else:
+            new_data=data[0:c_hdr[14]]
+        all_data.extend(new_data)
     return numpy.array(all_data, 'f')
 
 

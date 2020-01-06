@@ -108,7 +108,7 @@ if __name__ == "__main__":
         month = int(month)
         n_months = int(n_months)
     except:
-        print "Check arguments"
+        print("Check arguments")
         sys.exit(0)
             
     subset_ancil(infile, outfile, year, month, n_months)

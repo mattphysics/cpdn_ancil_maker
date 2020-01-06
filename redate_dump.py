@@ -57,18 +57,17 @@ def redate_ancil_or_dump(infile, outfile, year, calendar, periodic=False, dump=F
         fix_hdr[22] = 1
         fix_hdr[23:26] = 0
         fix_hdr[26] = 331
-        
         fix_hdr[27] = year
     else:
         fix_hdr[20] = year
         fix_hdr[27] += yr_off
-        
+
     # strip the climate meaning?
     if dump and strip_cm:
         pp_hdrs = strip_dump_headers(pp_hdrs)
         # reset the number of fields
         fix_hdr[151] = pp_hdrs.shape[0]
-        
+
     # redate pp hdrs
     for i in range(0, fix_hdr[151]):
         # add the year offset
@@ -79,7 +78,7 @@ def redate_ancil_or_dump(infile, outfile, year, calendar, periodic=False, dump=F
         else:
             pp_hdrs[i,0] += yr_off
             pp_hdrs[i,6] += yr_off
-        
+
         # change the calendar if necessary - only applicable to start dumps
         if calendar == "360":
             pp_hdrs[i,12] = int(pp_hdrs[i,12]/10)*10+2
@@ -101,7 +100,7 @@ def redate_ancil_or_dump(infile, outfile, year, calendar, periodic=False, dump=F
     # if the file is to be periodic then change the fixed header
     if periodic:
         fix_hdr[9] = 2
-    
+
     # read all the data in
     data = read_data(fh, fix_hdr, intc, pp_hdrs)
     fix_field_header_offsets(pp_hdrs, fix_hdr, intc)
@@ -135,6 +134,6 @@ if __name__ == "__main__":
     try:
         year = int(date)
     except:
-        print "Year in format yyyy"
+        print("Year in format yyyy")
         sys.exit(0)
     redate_ancil_or_dump(infile, outfile, year, calendar, periodic, dump, strip_cm)

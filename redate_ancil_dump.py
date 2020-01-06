@@ -135,6 +135,6 @@ if __name__ == "__main__":
     try:
         year = int(date)
     except:
-        print "Year in format yyyy"
+        print("Year in format yyyy")
         sys.exit(0)
     redate_ancil_or_dump(infile, outfile, year, calendar, periodic, dump, strip_cm)
