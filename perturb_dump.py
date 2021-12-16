@@ -119,7 +119,7 @@ def perturb_dump(infile, pert_file, field, outfile,generic):
         rowc = numpy.zeros([0], 'f')
     
     # Check if year should be made generic
-    if generic:
+    if generic==1:
         fix_hdr[27] = 0
 
     # read all the data in
