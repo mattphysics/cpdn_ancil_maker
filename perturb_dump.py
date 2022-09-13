@@ -139,6 +139,13 @@ def main():
         if opt in ['--output=','--output', '-o']:
             outfile = val
 
+    # print(infile, pert_file, field, outfile)
+    print('')
+    print(infile)
+    print(pert_file)
+    print(field)
+    print(outfile)
+    print('')
     ok=perturb_dump(infile, pert_file, field, outfile)
 
 if __name__ == "__main__":
