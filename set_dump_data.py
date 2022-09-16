@@ -16,16 +16,16 @@ import array
 import numpy
 from netCDF4 import Dataset as netcdf_file
 
-def get_pert_data_nc(pert_file):
+def get_data_nc(pert_file):
     nc_file = netcdf_file(pert_file,'r')
-    pert_var=nc_file.variables['perturbation']
+    pert_var=nc_file.variables['data'] #perturbation
     pert=pert_var[:]
     data=pert.flatten()
     print(numpy.max(data))
     print(data.shape)
     return data
 
-def get_pert_data(pert_file):
+def get_data(pert_file):
     # read the file as a binary file
     fh = open(pert_file, 'rb')
     fix_hdr = read_fixed_header(fh)
@@ -96,13 +96,13 @@ def set_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fields=
 
 #############################################################################
 
-def perturb_dump(infile, pert_file, field, outfile):
+def set_dump(infile, pert_file, field, outfile):
     sfx=pert_file.split(".")[-1]
     print(sfx)
     if sfx=="nc":
-        pert_data=get_pert_data_nc(pert_file)
+        pert_data=get_data_nc(pert_file)
     else:
-        pert_data=get_pert_data(pert_file)
+        pert_data=get_data(pert_file)
 
     # read the file as a binary file
     fh = open(infile, 'rb')
@@ -147,7 +147,7 @@ def main():
     print(field)
     print(outfile)
     print('')
-    ok=perturb_dump(infile, pert_file, field, outfile)
+    ok=set_dump(infile, pert_file, field, outfile)
 
 if __name__ == "__main__":
     main()
