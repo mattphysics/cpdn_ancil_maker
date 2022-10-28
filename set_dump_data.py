@@ -122,6 +122,10 @@ def set_dump(infile, pert_file, field, outfile,generic=0):
     # Check if year should be made generic
     if generic==1:
         fix_hdr[27] = 0
+        
+        for i in range(0, fix_hdr[151]):
+            pp_hdrs[i,0] = 0
+            pp_hdrs[i,6] = 0   
 
     # read all the data in
     data = set_data(fh, fix_hdr, intc, pp_hdrs,pert_data,field)
