@@ -44,7 +44,7 @@ def get_pert_data(pert_file):
     # read all the data in
     data_raw = read_data(fh, fix_hdr, intc, pp_hdrs)
     data = array.array('f')
-    data.fromstring(data_raw)
+    data.frombytes(data_raw)
     print(data[0:10])
     return data
 
@@ -75,7 +75,7 @@ def perturb_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fie
         fh.seek(surface_offset * WORDSIZE, os.SEEK_SET)
         data_raw = fh.read(surface_size * WORDSIZE)
         data = array.array('f')
-        data.fromstring(data_raw)
+        data.frombytes(data_raw)
         if field==stash_code:
             #print(field,stash_code)
             start_fidx=fidx*c_hdr[14]
@@ -95,7 +95,7 @@ def perturb_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fie
 
 #############################################################################
 
-def perturb_dump(infile, pert_file, field, outfile,generic):
+def perturb_dump(infile, pert_file, field, outfile,generic=0):
     sfx=pert_file.split(".")[-1]
     print(sfx)
     if sfx=="nc":

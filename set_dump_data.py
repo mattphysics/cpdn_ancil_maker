@@ -44,7 +44,7 @@ def get_data(pert_file):
     # read all the data in
     data_raw = read_data(fh, fix_hdr, intc, pp_hdrs)
     data = array.array('f')
-    data.fromstring(data_raw)
+    data.frombytes(data_raw)
     print(data[0:10])
     return data
 
@@ -75,7 +75,7 @@ def set_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fields=
         fh.seek(surface_offset * WORDSIZE, os.SEEK_SET)
         data_raw = fh.read(surface_size * WORDSIZE)
         data = array.array('f')
-        data.fromstring(data_raw)
+        data.frombytes(data_raw)
         if field==stash_code:
             #print(field,stash_code)
             start_fidx=fidx*c_hdr[14]
