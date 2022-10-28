@@ -170,7 +170,7 @@ def main():
     print('outfile: ', outfile)
     print('generic: ', generic)
     print('')
-    # ok=set_dump(infile, pert_file, field, outfile, generic)
+    ok=set_dump(infile, pert_file, field, outfile, generic)
 
 if __name__ == "__main__":
     main()

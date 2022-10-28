@@ -168,7 +168,7 @@ def main():
     print('outfile: ', outfile)
     print('generic: ', generic)
     print('')
-    # ok=perturb_dump(infile, pert_file, field, outfile, generic=generic)
+    ok=perturb_dump(infile, pert_file, field, outfile, generic=generic)
 
 if __name__ == "__main__":
     main()
