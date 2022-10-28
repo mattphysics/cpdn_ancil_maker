@@ -96,7 +96,7 @@ def set_data(fh, fix_hdr, intc, pp_hdrs, pert_data,field,start_idx=-1, n_fields=
 
 #############################################################################
 
-def set_dump(infile, pert_file, field, outfile):
+def set_dump(infile, pert_file, field, outfile,generic=0):
     sfx=pert_file.split(".")[-1]
     print(sfx)
     if sfx=="nc":
@@ -118,7 +118,11 @@ def set_dump(infile, pert_file, field, outfile):
         rowc = read_row_constants(fh, fix_hdr)
     else:
         rowc = numpy.zeros([0], 'f')
-    
+
+    # Check if year should be made generic
+    if generic==1:
+        fix_hdr[27] = 0
+
     # read all the data in
     data = set_data(fh, fix_hdr, intc, pp_hdrs,pert_data,field)
     
@@ -129,7 +133,15 @@ def set_dump(infile, pert_file, field, outfile):
 
 #############################################################################
 def main():
-    opts, args = getopt.getopt(sys.argv[1:], 'i:p:f:o', ['input==', 'pert_file==', 'field==', 'output=='])
+    # opts, args = getopt.getopt(sys.argv[1:], 'i:p:f:o', ['input==', 'pert_file==', 'field==', 'output=='])
+    opts, args = getopt.getopt(sys.argv[1:], 'i:p:f:o:g:', ['input==', 'pert_file==', 'field==', 'output==', 'generic=='])
+
+    infile = None
+    pert_file = None
+    field = None
+    outfile = None
+    generic = 0
+
     for opt, val in opts:
         if opt in ['--input=','--input', '-i']:
             infile = val
@@ -139,15 +151,26 @@ def main():
             field = int(val)
         if opt in ['--output=','--output', '-o']:
             outfile = val
+        if opt in ['--generic=','--generic', '-g']:
+            generic = int(val)
 
+    print('Check that all inputs are defined properly: ')
+    assert (isinstance(infile,str) and len(infile) > 0)
+    assert (isinstance(pert_file,str) and len(pert_file) > 0)
+    assert isinstance(field,int)
+    assert (isinstance(outfile,str) and len(outfile) > 0)
+    assert isinstance(generic,int)
+    print('ok')    
+    
     # print(infile, pert_file, field, outfile)
     print('')
-    print(infile)
-    print(pert_file)
-    print(field)
-    print(outfile)
+    print('infile: ', infile)
+    print('pert_file: ', pert_file)
+    print('field: ', field)
+    print('outfile: ', outfile)
+    print('generic: ', generic)
     print('')
-    ok=set_dump(infile, pert_file, field, outfile)
+    # ok=set_dump(infile, pert_file, field, outfile, generic)
 
 if __name__ == "__main__":
     main()
